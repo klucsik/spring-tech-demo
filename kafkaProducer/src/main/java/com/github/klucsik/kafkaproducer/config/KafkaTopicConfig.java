@@ -29,7 +29,7 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic topic2() {
+    public NewTopic todoTopic() {
         return new NewTopic("todo", 1, (short) 1);
     }
 }

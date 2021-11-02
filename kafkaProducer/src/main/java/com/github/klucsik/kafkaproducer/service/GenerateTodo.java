@@ -1,11 +1,15 @@
 package com.github.klucsik.kafkaproducer.service;
 
+import com.github.klucsik.kafkaproducer.dto.ToDo;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class GenerateTodo {
@@ -65,14 +69,21 @@ public class GenerateTodo {
             "testing procedures", "total linkage", "users", "value", "vortals", "web-readiness", "web services", "fungibility",
             "clouds", "nosql", "storage", "virtualization", "scrums", "sprints", "wins");
 
-    public String generate(){
-        Random rand = new Random();
-        return adverbs.get(rand.nextInt(adverbs.size())) +
+    public ToDo generate(){
+        ThreadLocalRandom rand = ThreadLocalRandom.current();
+        ToDo toDo = new ToDo();
+        toDo.setTodo( adverbs.get(rand.nextInt(adverbs.size())) +
                 " " +
                 verbs.get(rand.nextInt(verbs.size())) +
                 " " +
                 adjectives.get(rand.nextInt(adjectives.size())) +
                 " " +
-                nouns.get(rand.nextInt(nouns.size()));
+                nouns.get(rand.nextInt(nouns.size()))
+        );
+        long minDay = LocalDate.now().toEpochDay();
+        long maxDay = LocalDate.of(LocalDate.now().getYear()+1, 12, 31).toEpochDay();
+        long randomDay = rand.nextLong(minDay, maxDay);
+        toDo.setDeadline(LocalDate.ofEpochDay(randomDay));
+        return toDo;
     }
 }
