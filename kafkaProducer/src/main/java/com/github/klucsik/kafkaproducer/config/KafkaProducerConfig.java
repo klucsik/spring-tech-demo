@@ -1,6 +1,6 @@
 package com.github.klucsik.kafkaproducer.config;
 
-import com.github.klucsik.kafkaproducer.dto.ToDo;
+import com.github.klucsik.kafkaproducer.dto.Todo;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +42,7 @@ public class KafkaProducerConfig {
 
     //We want to send some java objects. We'll need some serialization/deserialization for this
     @Bean
-    public ProducerFactory<String, ToDo> todoProducerFactory() {
+    public ProducerFactory<String, Todo> todoProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -57,7 +57,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, ToDo> todoKafkaTemplate() {
+    public KafkaTemplate<String, Todo> todoKafkaTemplate() {
         return new KafkaTemplate<>(todoProducerFactory());
     }
 

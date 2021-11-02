@@ -1,6 +1,6 @@
 package com.github.klucsik.kafkaproducer.messaging;
 
-import com.github.klucsik.kafkaproducer.dto.ToDo;
+import com.github.klucsik.kafkaproducer.dto.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,20 +13,20 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 public class KafkaTodo {
 
     @Autowired
-    private KafkaTemplate<String, ToDo> kafkaTemplate;
+    private KafkaTemplate<String, Todo> kafkaTemplate;
 
     @Value(value = "${kafka.todotopicname}")
     private String topicName;
 
-    public void sendMessage(ToDo toDo) {
+    public void sendMessage(Todo toDo) {
 
-        ListenableFuture<SendResult<String, ToDo>> future =
+        ListenableFuture<SendResult<String, Todo>> future =
                 kafkaTemplate.send(topicName, toDo); //if we just call this, without the future = part it'll be blocking
 
-        future.addCallback(new ListenableFutureCallback<SendResult<String, ToDo>>() {
+        future.addCallback(new ListenableFutureCallback<SendResult<String, Todo>>() {
 
             @Override
-            public void onSuccess(SendResult<String, ToDo> result) {
+            public void onSuccess(SendResult<String, Todo> result) {
                 System.out.println("Sent message=[" + toDo +
                         "] with offset=[" + result.getRecordMetadata().offset() + "]");
             }
