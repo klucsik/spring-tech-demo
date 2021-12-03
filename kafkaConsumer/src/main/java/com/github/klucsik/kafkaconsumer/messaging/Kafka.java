@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Kafka {
-    @KafkaListener(topics = "todo")
+    @KafkaListener(topics = "hello")
     public void listenTodo(String message) {
-        System.out.println("Received Message: " + message);
+        System.out.println("Received Message on hello topic: " + message);
     }
 }
